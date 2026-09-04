@@ -64,5 +64,9 @@
     ;; — the worst it can do is be wrong in public. It runs on deepseek, a
     ;; different provider from code's, which is both the rule and the point.
     (review     (on (pull-request-updated))                   (mode live))
-    (fix        (on (command "/fix"))                         (mode off))
+    ;; Live. Fix pushes to the branch of a pull request mesthiri opened —
+    ;; and only such a branch: pushing to a contributor's branch is not
+    ;; mesthiri's to do, so an explicit /fix on a foreign pull request is
+    ;; refused rather than obeyed.
+    (fix        (on (command "/fix"))                         (mode live))
     (retro      (on (schedule "sunday 06:00"))                (mode off))))
