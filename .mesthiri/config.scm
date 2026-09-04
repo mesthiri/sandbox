@@ -67,8 +67,10 @@
     (triage     (on (or (issue-opened) (issue-reopened) (command "/triage")))
                 (mode dry-run))
     (prioritize (on (schedule "08:00"))                       (mode off))
+    ;; Live, and tier 1: a single reproducible-defect issue is sufficient
+    ;; authorization. Tier 2 still needs a human to say so by name.
     (code       (on (or (label "ready-to-implement") (command "/implement")))
-                (mode off) (max-tier 0))
+                (mode live) (max-tier 1))
     (review     (on (pull-request-updated))                   (mode off))
     (fix        (on (command "/fix"))                         (mode off))
     (retro      (on (schedule "sunday 06:00"))                (mode off))))
