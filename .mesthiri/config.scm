@@ -71,6 +71,8 @@
     ;; authorization. Tier 2 still needs a human to say so by name.
     (code       (on (or (label "ready-to-implement") (command "/implement")))
                 (mode live) (max-tier 1))
-    (review     (on (pull-request-updated))                   (mode off))
+    ;; Live: findings are comments, and review cannot merge or approve
+    ;; anything — the worst it can do is be wrong in public.
+    (review     (on (pull-request-updated))                   (mode live))
     (fix        (on (command "/fix"))                         (mode off))
     (retro      (on (schedule "sunday 06:00"))                (mode off))))
