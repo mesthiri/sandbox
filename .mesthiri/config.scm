@@ -44,6 +44,11 @@
 
   (rubric ".mesthiri/rubric.md")
 
+  ;; How this repository's tests run. The code stage's prompt tells the agent
+  ;; to get this green before it reports done; without it the prompt says
+  ;; "(none configured)" and the agent has to guess.
+  (test-command "kaappi --lib-path ./lib tests/test-stats.scm")
+
   (deny-paths ".mesthiri/**" ".github/workflows/**")
 
   (budgets
