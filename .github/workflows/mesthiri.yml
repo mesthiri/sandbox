@@ -61,4 +61,8 @@ jobs:
     secrets:
       reader-key: ${{ secrets.MESTHIRI_READER_KEY }}
       writer-key: ${{ secrets.MESTHIRI_WRITER_KEY }}
-      model-key: ${{ secrets.MESTHIRI_MODEL_KEY }}
+      # The one model-key channel, filled from whichever repository secret
+      # actually holds a key. The canonical template names
+      # MESTHIRI_MODEL_KEY; this repository's key was added as GLM_API_KEY,
+      # and mapping it here is cheaper and safer than copying a secret.
+      model-key: ${{ secrets.GLM_API_KEY }}

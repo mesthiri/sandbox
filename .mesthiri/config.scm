@@ -17,15 +17,28 @@
   ;; .mesthiri/harness/<role>.scm — triage applies a rubric to an issue,
   ;; review argues with a diff, and they do not need the same model.
   ;;
-  ;; `secret` is the repository secret holding the key; `key-env` is the name
-  ;; the agent reads it from. Endpoints are from each vendor's own docs.
+  ;; `secret` is the environment variable the JOB holds the key in, and it is
+  ;; `MESTHIRI_MODEL_KEY` for every provider — the shim has one `model-key`
+  ;; input and the reusable workflow exports it under that one name. Naming
+  ;; the repository secret here instead (this file said `GLM_API_KEY`) means
+  ;; mesthiri looks up a variable the job does not have, and the agent starts
+  ;; with no key. Which repository secret fills that channel is chosen in the
+  ;; shim; this one passes `secrets.GLM_API_KEY`.
+  ;;
+  ;; The consequence, worth stating plainly: there is one model-key channel,
+  ;; so only one of the providers below can be funded at a time. Declaring
+  ;; both is still useful — `key-env` and `api` differ — but a role pointed at
+  ;; the unfunded one fails at the first call.
+  ;;
+  ;; `key-env` is the name the agent reads it from. Endpoints are each
+  ;; vendor's own.
   (providers
     (deepseek (endpoint "https://api.deepseek.com")
-              (secret DEEPSEEK_API_KEY)
+              (secret MESTHIRI_MODEL_KEY)
               (key-env DEEPSEEK_API_KEY)
               (api openai-completions))
     (zai (endpoint "https://api.z.ai/api/paas/v4/")
-         (secret GLM_API_KEY)
+         (secret MESTHIRI_MODEL_KEY)
          (key-env GLM_API_KEY)
          (api openai-completions)))
 
