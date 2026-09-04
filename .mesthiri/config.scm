@@ -13,10 +13,21 @@
 
   (agent (backend pi) (version "0.84.4"))
 
+  ;; Two providers. Which one a role uses is that role's choice, in
+  ;; .mesthiri/harness/<role>.scm — triage applies a rubric to an issue,
+  ;; review argues with a diff, and they do not need the same model.
+  ;;
+  ;; `secret` is the repository secret holding the key; `key-env` is the name
+  ;; the agent reads it from. Endpoints are from each vendor's own docs.
   (providers
-    (main (endpoint "https://api.anthropic.com")
-          (secret MESTHIRI_MODEL_KEY)
-          (key-env ANTHROPIC_API_KEY)))
+    (deepseek (endpoint "https://api.deepseek.com")
+              (secret DEEPSEEK_API_KEY)
+              (key-env DEEPSEEK_API_KEY)
+              (api openai-completions))
+    (zai (endpoint "https://api.z.ai/api/paas/v4/")
+         (secret GLM_API_KEY)
+         (key-env GLM_API_KEY)
+         (api openai-completions)))
 
   (rubric ".mesthiri/rubric.md")
 
