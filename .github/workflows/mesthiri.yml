@@ -69,7 +69,10 @@ jobs:
         chmod +x /tmp/kaappi
         sudo mv /tmp/kaappi /usr/local/bin/kaappi
         kaappi --version
-    secrets:
+      # The repository secrets holding model keys, by the names
+      # .mesthiri/config.scm gives each provider. Only these are exported.
+      model-secrets: "GLM_API_KEY DEEPSEEK_API_KEY"
+    secrets: inherit
       reader-key: ${{ secrets.MESTHIRI_READER_KEY }}
       writer-key: ${{ secrets.MESTHIRI_WRITER_KEY }}
       # The one model-key channel, filled from whichever repository secret
