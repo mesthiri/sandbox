@@ -16,6 +16,20 @@
 ;; change the code stage is expected to make, alongside fixing `median`.
 ;; (check "median of even length" 5 (median '(4 6 1 9)))
 
+;; The empty list: the mean and median of no numbers do not exist, so both
+;; must raise an error rather than return a plausible-looking 0.
+(check "mean of empty list raises" "mean: empty list"
+       (guard (e ((error-object? e) (error-object-message e)))
+         (mean '())
+         'returned-a-value))
+(check "median of empty list raises" "median: empty list"
+       (guard (e ((error-object? e) (error-object-message e)))
+         (median '())
+         'returned-a-value))
+;; A dataset that genuinely averages to zero still reports 0 — the point of
+;; raising on the empty list is that the two cases stay distinguishable.
+(check "mean of zeros is a real 0" 0 (mean '(0 0)))
+
 (newline)
 (display "  ") (display pass) (display " passed, ") (display fail) (display " failed") (newline)
 (if (> fail 0) (exit 1) (exit 0))

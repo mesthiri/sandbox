@@ -8,9 +8,18 @@
       (let loop ((l xs) (acc 0))
         (if (null? l) acc (loop (cdr l) (+ acc (car l))))))
 
+    ;; The mean and median of the empty list do not exist. Returning 0 for
+    ;; them is wrong twice over: it invents an answer, and it makes an empty
+    ;; dataset indistinguishable from one that genuinely averages to zero.
+    ;; Between raising an error and returning a distinguishable non-number,
+    ;; these procedures raise: an empty dataset is usually a failure upstream
+    ;; (a sensor that was offline, an empty column) and a value — even
+    ;; +nan.0, which is a float and so never otherwise appears in results
+    ;; computed from exact numbers — lets that failure flow on silently.
+    ;; `sum-of` is unchanged: the sum of no numbers really is 0.
     (define (mean xs)
       (if (null? xs)
-          0
+          (error "mean: empty list")
           (/ (sum-of xs) (length xs))))
 
     ;; NOTE: this is wrong for even-length lists — it returns the upper of the
@@ -18,7 +27,7 @@
     ;; issue #1 reports it.
     (define (median xs)
       (if (null? xs)
-          0
+          (error "median: empty list")
           (let* ((sorted (list-sort < xs))
                  (n (length sorted)))
             (list-ref sorted (quotient n 2)))))
