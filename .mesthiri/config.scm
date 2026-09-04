@@ -2,14 +2,14 @@
 ;;;
 ;;; Hand-committed: `mesthiri install` is M9 and does not exist yet.
 ;;;
-;;; FILL IN AFTER REGISTERING THE APPS — the two ids below are placeholders,
-;;; and mesthiri refuses to run without real ones rather than guessing.
+;;; The two App ids are real and are public configuration; only the private
+;;; keys are secrets, and those are repository secrets on this repo.
 (mesthiri
   (version 1)
 
   (operator "Baiju Muthukadan" "baiju.m.mail@gmail.com")
 
-  (apps (reader 0) (writer 0))          ; <- replace both
+  (apps (reader 4825652) (writer 4825675))
 
   (agent (backend pi) (version "0.84.4"))
 
