@@ -18,10 +18,10 @@
 
 ;; Performance test for median quadratic stack overflow on sorted list.
 (let ((test-list (iota 1000)))
-  ;; Just check it runs and returns the true median 501.
+  ;; Just check it runs and returns the median 500 (the upper middle).
   (check "median large sorted list" 500 (median test-list)))
 ;; Deliberately not asserted yet — see issue #1. Adding this assertion is the
-;; change the code stage is expected to make, alongside fixing `median`.
+;; change the code stage is expected to make, alongside fixing `median`.  
 ;; (check "median of even length" 5 (median '(4 6 1 9)))
 
 (newline)

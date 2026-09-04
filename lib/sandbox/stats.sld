@@ -23,6 +23,16 @@
                  (n (length sorted)))
             (list-ref sorted (quotient n 2)))))
 
+    (define (take xs n)
+      (if (or (zero? n) (null? xs))
+          '()
+          (cons (car xs) (take (cdr xs) (- n 1)))))
+
+    (define (drop xs n)
+      (if (or (zero? n) (null? xs))
+          xs
+          (drop (cdr xs) (- n 1))))
+
     (define (merge-sort less xs)
       (if (or (null? xs) (null? (cdr xs)))
           xs
@@ -36,16 +46,6 @@
                  ((less (car l) (car r))
                   (merge (cdr l) r (cons (car l) acc)))
                  (else (merge l (cdr r) (cons (car r) acc))))))))))
-
-    (define (take xs n)
-      (if (or (zero? n) (null? xs))
-          '()
-          (cons (car xs) (take (cdr xs) (- n 1)))))
-
-    (define (drop xs n)
-      (if (or (zero? n) (null? xs))
-          xs
-          (drop (cdr xs) (- n 1))))
 
     (define (list-sort less xs)
       (if (or (null? xs) (null? (cdr xs)))
