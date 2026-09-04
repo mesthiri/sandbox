@@ -72,11 +72,8 @@ jobs:
       # The repository secrets holding model keys, by the names
       # .mesthiri/config.scm gives each provider. Only these are exported.
       model-secrets: "GLM_API_KEY DEEPSEEK_API_KEY"
+    # inherit rather than a mapping: a reusable workflow cannot receive a
+    # secret whose name it does not declare, and the model keys above are
+    # named by this repository, not by mesthiri. The App keys still arrive
+    # under the names the reusable workflow declares.
     secrets: inherit
-      reader-key: ${{ secrets.MESTHIRI_READER_KEY }}
-      writer-key: ${{ secrets.MESTHIRI_WRITER_KEY }}
-      # The one model-key channel, filled from whichever repository secret
-      # actually holds a key. The canonical template names
-      # MESTHIRI_MODEL_KEY; this repository's key was added as GLM_API_KEY,
-      # and mapping it here is cheaper and safer than copying a secret.
-      model-key: ${{ secrets.GLM_API_KEY }}
