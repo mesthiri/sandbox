@@ -58,6 +58,17 @@ jobs:
     # a repo running an older shim.
     if: ${{ !contains(github.event.comment.body, '<!-- mesthiri:') }}
     uses: mesthiri/mesthiri/.github/workflows/reusable-dispatch.yml@v0
+    with:
+      # This repository is Kaappi Scheme, so its tests need kaappi. The code
+      # stage asks the agent to get them green and it cannot do that with no
+      # interpreter — the first live run spent 35 of 40 turns looking for one.
+      setup: |
+        set -euo pipefail
+        curl -fsSL -o /tmp/kaappi \
+          https://github.com/kaappi/kaappi/releases/download/v0.26.1/kaappi-x86_64-linux
+        chmod +x /tmp/kaappi
+        sudo mv /tmp/kaappi /usr/local/bin/kaappi
+        kaappi --version
     secrets:
       reader-key: ${{ secrets.MESTHIRI_READER_KEY }}
       writer-key: ${{ secrets.MESTHIRI_WRITER_KEY }}
