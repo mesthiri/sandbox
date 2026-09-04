@@ -1,0 +1,5 @@
+# mesthiri's own run artefacts, if a tool is ever pointed at a checkout.
+# They belong outside the working tree; this is a backstop, not the fix.
+.agent-home/
+trace.jsonl
+agent-stderr.log
