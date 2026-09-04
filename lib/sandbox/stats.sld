@@ -13,15 +13,17 @@
           0
           (/ (sum-of xs) (length xs))))
 
-    ;; NOTE: this is wrong for even-length lists — it returns the upper of the
-    ;; two middle elements rather than their average. Left in deliberately;
-    ;; issue #1 reports it.
     (define (median xs)
       (if (null? xs)
           0
           (let* ((sorted (list-sort < xs))
-                 (n (length sorted)))
-            (list-ref sorted (quotient n 2)))))
+                 (n (length sorted))
+                 (mid (quotient n 2)))
+            (if (odd? n)
+                (list-ref sorted mid)
+                (/ (+ (list-ref sorted (- mid 1))
+                      (list-ref sorted mid))
+                   2)))))
 
     (define (list-sort less xs)
       (if (or (null? xs) (null? (cdr xs)))

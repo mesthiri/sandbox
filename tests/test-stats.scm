@@ -12,9 +12,7 @@
 (check "sum" 10 (sum-of '(1 2 3 4)))
 (check "mean" 5 (mean '(4 5 6)))
 (check "median of odd length" 5 (median '(9 5 1)))
-;; Deliberately not asserted yet — see issue #1. Adding this assertion is the
-;; change the code stage is expected to make, alongside fixing `median`.
-;; (check "median of even length" 5 (median '(4 6 1 9)))
+(check "median of even length" 5 (median '(4 6 1 9)))
 
 (newline)
 (display "  ") (display pass) (display " passed, ") (display fail) (display " failed") (newline)
