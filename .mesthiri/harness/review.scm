@@ -9,4 +9,4 @@
   ;; shared blind spots are what adversarial verification exists to catch.
   (model "deepseek-v4-flash")
   (effort high)
-  (budgets (tokens 200000) (turns 30)))
+  (budgets (tokens 200000) (turns 45)))
