@@ -71,8 +71,13 @@
     ;; authorization. Tier 2 still needs a human to say so by name.
     (code       (on (or (label "ready-to-implement") (command "/implement")))
                 (mode live) (max-tier 1))
-    ;; Live: findings are comments, and review cannot merge or approve
-    ;; anything — the worst it can do is be wrong in public.
-    (review     (on (pull-request-updated))                   (mode live))
+    ;; Off, and not by preference. mesthiri refuses a config where review
+    ;; runs the same provider and model as code, because a reviewer sharing
+    ;; the implementer's blind spots is what adversarial verification exists
+    ;; to catch. This account funds exactly one model — glm-5.3, which code
+    ;; uses; every other z.ai model answers 1113 "insufficient balance", and
+    ;; the shim carries one model key, so a second provider is not reachable
+    ;; either. Review turns on when a second model is funded.
+    (review     (on (pull-request-updated))                   (mode off))
     (fix        (on (command "/fix"))                         (mode off))
     (retro      (on (schedule "sunday 06:00"))                (mode off))))
