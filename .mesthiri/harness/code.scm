@@ -7,10 +7,12 @@
 ;;; path unexercised. A weak implementer is how findings get produced
 ;;; honestly, rather than by planting a defect.
 ;;;
-;;; gpt-4.1-nano and not gpt-3.5-turbo: both tool-call in a single turn, but
-;;; a model that falls apart across a 40-turn session fails the run instead
-;;; of writing weak code, and that failure looks nothing like the thing we
-;;; are trying to observe.
+;;; gpt-4o-mini, arrived at by measurement. gpt-4.1-nano was tried first and
+;;; is too weak: it spent all 40 turns on 10,995 tokens — roughly 270 per
+;;; turn — and never settled. That is the disintegration failure, not weak
+;;; code, and it tells us nothing about what a reviewer would find. The
+;;; useful band is a model that finishes the job badly, not one that cannot
+;;; finish it.
 ;;;
 ;;; Review must not use this same provider and model — mesthiri refuses a
 ;;; config where they match, because a reviewer sharing the implementer's
@@ -18,6 +20,6 @@
 ;;; Review is on deepseek-v4-flash, a different provider entirely.
 (harness
   (provider openai)
-  (model "gpt-4.1-nano")
+  (model "gpt-4o-mini")
   (effort high)
   (budgets (tokens 200000) (turns 40)))
